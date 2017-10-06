@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		E270AE7E1F8809A70062B0F9 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = E270AE7D1F8809A70062B0F9 /* main.c */; };
+		E270AE871F880B560062B0F9 /* rotor.c in Sources */ = {isa = PBXBuildFile; fileRef = E270AE861F880B560062B0F9 /* rotor.c */; };
+		E270AE8B1F88112D0062B0F9 /* rotors.c in Sources */ = {isa = PBXBuildFile; fileRef = E270AE891F88112D0062B0F9 /* rotors.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,6 +27,10 @@
 /* Begin PBXFileReference section */
 		E270AE7A1F8809A70062B0F9 /* EnigmaC */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = EnigmaC; sourceTree = BUILT_PRODUCTS_DIR; };
 		E270AE7D1F8809A70062B0F9 /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
+		E270AE851F8809FD0062B0F9 /* rotor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = rotor.h; sourceTree = "<group>"; };
+		E270AE861F880B560062B0F9 /* rotor.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = rotor.c; sourceTree = "<group>"; };
+		E270AE891F88112D0062B0F9 /* rotors.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = rotors.c; sourceTree = "<group>"; };
+		E270AE8A1F88112D0062B0F9 /* rotors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rotors.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,9 +63,21 @@
 		E270AE7C1F8809A70062B0F9 /* EnigmaC */ = {
 			isa = PBXGroup;
 			children = (
+				E270AE841F8809D00062B0F9 /* rotor */,
 				E270AE7D1F8809A70062B0F9 /* main.c */,
 			);
 			path = EnigmaC;
+			sourceTree = "<group>";
+		};
+		E270AE841F8809D00062B0F9 /* rotor */ = {
+			isa = PBXGroup;
+			children = (
+				E270AE851F8809FD0062B0F9 /* rotor.h */,
+				E270AE861F880B560062B0F9 /* rotor.c */,
+				E270AE891F88112D0062B0F9 /* rotors.c */,
+				E270AE8A1F88112D0062B0F9 /* rotors.h */,
+			);
+			name = rotor;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -119,6 +137,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E270AE871F880B560062B0F9 /* rotor.c in Sources */,
+				E270AE8B1F88112D0062B0F9 /* rotors.c in Sources */,
 				E270AE7E1F8809A70062B0F9 /* main.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
