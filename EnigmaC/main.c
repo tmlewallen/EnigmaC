@@ -7,24 +7,51 @@
 //
 
 #include <stdio.h>
-#include "rotors.h"
+#include <stdlib.h>
+#include <string.h>
+#include <stdbool.h>
+#include "rotor_generator.h"
 
+#define DEFAULT_SEED 1024
+
+//args: random seed --seed
+//message (file)
 int main(int argc, const char * argv[]) {
     // insert code here...
-    Rotor* rotor = (Rotor*) malloc(sizeof(Rotor));
-    int alphaInArr[26];
-    for (int i = 0; i < 26; i++){
-        alphaInArr[i] = i;
+    int seed = DEFAULT_SEED;
+    char* filename = "";
+    char* message = "";
+    bool seedInput = false;
+    bool fileInput = false;
+    bool messageInput = false;
+    if (argc == 1){
+        printf("Usage: enigma {text} [--file] [--seed]\n");
+        return 1;
     }
-    int alphaOutArr[26];
-    for (int i = 0; i < 26; i++){
-        alphaOutArr[i] = i;
+    int i = 1;
+    while (i < argc){
+        if (strcmp(argv[i], "--file") == 0 && i+1 < argc){
+            strcpy(filename, argv[i+1]);
+            fileInput = true;
+            i++;
+        }
+        else if (strcmp(argv[i], "--seed") == 0 && i+1 < argc){
+            seed = atoi(argv[i+1]);
+            seedInput = true;
+            i++;
+        }
+        else{
+            strcpy(message, argv[i]);
+            messageInput = true;
+        }
+        i++;
     }
-    rotor->input = alphaInArr;
-    rotor->output = alphaOutArr;
-    rotor->offset = 0;
+    if (!seedInput){
+        printf("No seed provided. Using 1024 as seed...");
+    }
+    Rotors* rotors = generateRotors(seed);
+        
     
-    
-    printf("Hello, World!\n");
+
     return 0;
 }
