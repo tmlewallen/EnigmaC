@@ -11,6 +11,7 @@
 #include <string.h>
 #include <stdbool.h>
 #include "rotor_generator.h"
+#include "scanner.h"
 
 #define DEFAULT_SEED 1024
 
@@ -64,6 +65,14 @@ int main(int argc, const char * argv[]) {
     }
 	if (!numOfRotorsInput){
 		printf("No rotor count provided. Defaulting to 3...\n");
+	}
+	if (fileInput){
+		FILE* fp = fopen(filename, "r");
+		if (fp == NULL){
+			fprintf(stderr, "Error opening file %s", filename);
+		}
+		message = readMessage(fp);
+		msgLen = strlen(message);
 	}
     Rotors* rotors = generateRotors(numOfRotors, seed);
 	char* encryptedMsg = malloc(msgLen);

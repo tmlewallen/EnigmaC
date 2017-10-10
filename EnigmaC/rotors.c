@@ -22,6 +22,10 @@ char mapIntToChar(int i){
 
 char translate(Rotors* rs, char c){
 //	printf("\n\nTranslating input %c\n", c);
+	int asciiChar = (int) c;
+	if (asciiChar == 32 || asciiChar == 10 || asciiChar == 13){
+		return c;
+	}
     int ndx = mapCharToInt(c);
 //	printf("Input...\n");
     for (int i = 0; i < rs->len; i++){
