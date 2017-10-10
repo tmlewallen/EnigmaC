@@ -9,7 +9,7 @@
 #include "rotors.h"
 
 int mapCharToInt(char c){
-    int intVal = c - '0';
+    int intVal = (int)c;
     if (intVal >= 97 && intVal <= 122){
         intVal = intVal - 32;
     }
@@ -21,16 +21,28 @@ char mapIntToChar(int i){
 }
 
 char translate(Rotors* rs, char c){
+	printf("\n\nTranslating input %c\n", c);
     int ndx = mapCharToInt(c);
+	printf("Input...\n");
     for (int i = 0; i < rs->len; i++){
+		printf("Rotor : %d\n", i);
+		printf("%c -> ", mapIntToChar(ndx));
         Rotor* r = rs->rotorArr[i];
         ndx = input(r, ndx);
+		printf("(ndx = %d, %c)\n", ndx, mapIntToChar(ndx));
     }
+	printf("Reflector...\n");
     Rotor* reflector = rs->reflector;
+	printf("%c -> ", mapIntToChar(ndx));
     ndx = input(reflector, ndx);
+	printf("%c\n", mapIntToChar(ndx));
+	printf("Output...\n");
     for (int i = rs->len-1; i >= 0; i--){
+		printf("Rotor : %d\n", i);
+		printf("%c -> ", mapIntToChar(ndx));
         Rotor* r = rs->rotorArr[i];
         ndx = output(r, ndx);
+		printf("%c\n", mapIntToChar(ndx));
     }
     return mapIntToChar(ndx);
 }

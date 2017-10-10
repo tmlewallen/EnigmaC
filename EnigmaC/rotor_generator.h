@@ -15,4 +15,7 @@
 
 #endif /* rotor_generator_h */
 
-Rotors* generateRotors(int seed);
+Rotors* generateRotors(int numberOfRotors, int seed);
+Rotor* buildRandomRotor();
+Rotor* buildReflector();
+void shuffle(int* array, int* recipricol, size_t n);

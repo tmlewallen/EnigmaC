@@ -25,3 +25,5 @@ void advanceRotor(Rotor* r, int i);
 int input(Rotor* r, int a);
 
 int output(Rotor* r, int a);
+
+void printRotor(Rotor* rotor);
