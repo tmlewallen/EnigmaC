@@ -46,10 +46,10 @@ Rotor* buildRandomRotor(){
 	//shuffle the arrays
 	shuffle(input, output, 26);
 	
-	printf("INPUT      OUTPUT\n");
-	for (int i = 0; i < 26; i++){
-	printf("%c -> %c, %c -> %c\n", mapIntToChar(i), mapIntToChar(input[i]), mapIntToChar(input[i]),mapIntToChar(output[input[i]]));
-	}
+//	printf("INPUT      OUTPUT\n");
+//	for (int i = 0; i < 26; i++){
+//	printf("%c -> %c, %c -> %c\n", mapIntToChar(i), mapIntToChar(input[i]), mapIntToChar(input[i]),mapIntToChar(output[input[i]]));
+//	}
 	
 	rotor->input = input;
 	rotor->output = output;
@@ -72,11 +72,11 @@ Rotor* buildReflector() {
 		input[i] = opposite;
 		input[opposite] = i;
 	}
-	printf("Reflector...\n");
-	printf("INPUT      OUTPUT\n");
-	for (int i = 0; i < 26; i++){
-		printf("%c -> %c, %c -> %c\n", mapIntToChar(i), mapIntToChar(input[i]), mapIntToChar(input[i]),mapIntToChar(output[input[i]]));
-	}
+//	printf("Reflector...\n");
+//	printf("INPUT      OUTPUT\n");
+//	for (int i = 0; i < 26; i++){
+//		printf("%c -> %c, %c -> %c\n", mapIntToChar(i), mapIntToChar(input[i]), mapIntToChar(input[i]),mapIntToChar(output[input[i]]));
+//	}
 	
 	rotor->input = input;
 	rotor->output = output;

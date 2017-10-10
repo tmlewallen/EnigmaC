@@ -21,28 +21,28 @@ char mapIntToChar(int i){
 }
 
 char translate(Rotors* rs, char c){
-	printf("\n\nTranslating input %c\n", c);
+//	printf("\n\nTranslating input %c\n", c);
     int ndx = mapCharToInt(c);
-	printf("Input...\n");
+//	printf("Input...\n");
     for (int i = 0; i < rs->len; i++){
-		printf("Rotor : %d\n", i);
-		printf("%c -> ", mapIntToChar(ndx));
+//		printf("Rotor : %d\n", i);
+//		printf("%c -> ", mapIntToChar(ndx));
         Rotor* r = rs->rotorArr[i];
         ndx = input(r, ndx);
-		printf("(ndx = %d, %c)\n", ndx, mapIntToChar(ndx));
+//		printf("(ndx = %d, %c)\n", ndx, mapIntToChar(ndx));
     }
-	printf("Reflector...\n");
+//	printf("Reflector...\n");
     Rotor* reflector = rs->reflector;
-	printf("%c -> ", mapIntToChar(ndx));
+//	printf("%c -> ", mapIntToChar(ndx));
     ndx = input(reflector, ndx);
-	printf("%c\n", mapIntToChar(ndx));
-	printf("Output...\n");
+//	printf("%c\n", mapIntToChar(ndx));
+//	printf("Output...\n");
     for (int i = rs->len-1; i >= 0; i--){
-		printf("Rotor : %d\n", i);
-		printf("%c -> ", mapIntToChar(ndx));
+//		printf("Rotor : %d\n", i);
+//		printf("%c -> ", mapIntToChar(ndx));
         Rotor* r = rs->rotorArr[i];
         ndx = output(r, ndx);
-		printf("%c\n", mapIntToChar(ndx));
+//		printf("%c\n", mapIntToChar(ndx));
     }
     return mapIntToChar(ndx);
 }

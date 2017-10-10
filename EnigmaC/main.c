@@ -68,7 +68,7 @@ int main(int argc, const char * argv[]) {
     Rotors* rotors = generateRotors(numOfRotors, seed);
 	char* encryptedMsg = malloc(msgLen);
 	for (unsigned long i = 0; i < msgLen; i++){
-		printf("%c (%d) -> %d\n", message[i], (int)message[i], mapCharToInt(message[i]));
+//		printf("%c (%d) -> %d\n", message[i], (int)message[i], mapCharToInt(message[i]));
 		encryptedMsg[i] = translate(rotors, message[i]);
 	}
 	printf("%s\n", encryptedMsg);
