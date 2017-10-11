@@ -1,18 +1,18 @@
 //
-//  rotor_generator.c
+//  enigma_generator.c
 //  EnigmaC
 //
 //  Created by Thomas on 10/8/17.
 //  Copyright © 2017 Thomas. All rights reserved.
 //
 
-#include "rotor_generator.h"
+#include "enigma_generator.h"
 #ifndef RAND_MAX
 #define RAND_MAX 32767
 #endif
 
 
-Enigma* generateRotors(int numberOfRotors, int numOfPlugs, int seed){
+Enigma* generateEnigma(int numberOfRotors, int numOfPlugs, int seed){
     srand((unsigned)seed);
     Enigma* e = malloc(sizeof(Enigma));
 	Rotor** rotorArr = malloc(sizeof(Rotor*) * numberOfRotors - 1);
@@ -21,6 +21,7 @@ Enigma* generateRotors(int numberOfRotors, int numOfPlugs, int seed){
 	}
 	e->rotorArr = rotorArr;
 	e->reflector = buildReflector();
+	e->plugBoard = buildPlugboard(numOfPlugs);
 	e->len = numberOfRotors - 1; //1 rotor is reflector
     return e;
 }
@@ -97,13 +98,51 @@ Rotor* buildReflector() {
 	
 	rotor->input = input;
 	rotor->output = output;
-//	printRotor(rotor);
-//	printf("INPUT     OUTPUT\n");
-//	for (int i = 0; i < 26; i++){
-//		printf("%c -> %c, %c -> %c\n", mapIntToChar(i), mapIntToChar(input[i]), mapIntToChar(input[i]),mapIntToChar(output[input[i]]));
-//	}
 	return rotor;
 }
+
+Rotor* buildPlugboard(int numOfPlugs) {
+	Rotor* rotor = malloc(sizeof(Rotor));
+	rotor->offset = 0;
+	rotor->turnCounter = 0;
+	rotor->turnThreshold = -1;
+	
+	//allocate character map arrays
+	int* input = malloc(sizeof(int) * 26);
+	
+	for (int i = 0; i < 26; i++){
+		input[i] = i;
+	}
+	
+	//populate character maps with 0-25
+	bool flipped[26];
+	for (int i = 0; i < 26; i++){
+		flipped[i] = false;
+	}
+	for (int i = 0; i < numOfPlugs; i++){
+		int ndxA = rand() % 26;
+		if (flipped[ndxA]){
+			while(flipped[ndxA]){
+				ndxA = (ndxA + 1) % 26;
+			}
+			flipped[ndxA] = true;
+		}
+		int ndxB = rand() % 26;
+		if (flipped[ndxB]) { //if random index is already flipped...
+			while(flipped[ndxB]){
+				ndxB = (ndxB + 1) % 26;
+			}
+			flipped[ndxB] = true;
+		}
+		int s = input[ndxA];
+		input[ndxA] = input[ndxB];
+		input[ndxB] = s;
+	}
+	
+	rotor->input = input;
+	return rotor;
+}
+
 
 void shuffle(int *array, int* recipricol, size_t n)
 {

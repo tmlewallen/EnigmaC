@@ -27,6 +27,8 @@ char translate(Enigma* rs, char c){
 		return c;
 	}
     int ndx = mapCharToInt(c);
+	Rotor* plugBoard = rs->plugBoard;
+	ndx = plugBoard->input[ndx];
 //	printf("Input...\n");
     for (int i = 0; i < rs->len; i++){
 //		printf("Rotor : %d\n", i);
@@ -48,5 +50,6 @@ char translate(Enigma* rs, char c){
         ndx = output(r, ndx);
 //		printf("%c\n", mapIntToChar(ndx));
     }
+	ndx = plugBoard->input[ndx];
     return mapIntToChar(ndx);
 }

@@ -10,7 +10,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
-#include "rotor_generator.h"
+#include "enigma_generator.h"
 #include "scanner.h"
 
 #define DEFAULT_SEED 1024
@@ -30,9 +30,10 @@ int main(int argc, const char * argv[]) {
     bool messageInput = false;
 	bool numOfRotorsInput = false;
 	bool plugsInput = false;
+	bool quiet = false;
 	
     if (argc == 1){
-        printf("Usage: enigma {text} [--file] [--seed] [--rotors] [--plugs]\n");
+        printf("Usage: enigma {text} [--file] [--seed] [--rotors] [--plugs] [--quiet]\n");
         return 1;
     }
     int i = 1;
@@ -58,6 +59,9 @@ int main(int argc, const char * argv[]) {
 			plugsInput = true;
 			i++;
 		}
+		else if (strcmp(argv[i], "--quiet") == 0){
+			quiet = true;
+		}
         else{
 			msgLen = strlen(argv[i]);
 			message = malloc(msgLen);
@@ -66,14 +70,22 @@ int main(int argc, const char * argv[]) {
         }
         i++;
     }
-    if (!seedInput){
-        printf("No seed provided. Using 1024 as seed...\n");
-    }
-	if (!numOfRotorsInput){
-		printf("No rotor count provided. Defaulting to 3...\n");
+	if (!quiet){
+		if (!seedInput){
+			printf("No seed provided. Using 1024 as seed...\n");
+		}
+		if (!numOfRotorsInput){
+			printf("No rotor count provided. Defaulting to 3...\n");
+		}
+		if (!plugsInput){
+			printf("No plug count provided. Defaulting to 2...\n");
+		}
 	}
-	if (!plugsInput){
-		printf("No plug count provided. Defaulting to 2...\n");
+	if (numOfPlugs > 13){
+		if (!quiet){
+			printf("Plug count cannot exceed 13! Defaulting to 2...");
+		}
+		numOfPlugs = 2;
 	}
 	if (fileInput){
 		FILE* fp = fopen(filename, "r");
@@ -83,7 +95,7 @@ int main(int argc, const char * argv[]) {
 		message = readMessage(fp);
 		msgLen = strlen(message);
 	}
-    Enigma* e = generateRotors(numOfRotors, numOfPlugs, seed);
+    Enigma* e = generateEnigma(numOfRotors, numOfPlugs, seed);
 	char* encryptedMsg = malloc(msgLen);
 	for (unsigned long i = 0; i < msgLen; i++){
 //		printf("%c (%d) -> %d\n", message[i], (int)message[i], mapCharToInt(message[i]));
