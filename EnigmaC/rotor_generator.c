@@ -12,17 +12,17 @@
 #endif
 
 
-Rotors* generateRotors(int numberOfRotors, int seed){
+Enigma* generateRotors(int numberOfRotors, int numOfPlugs, int seed){
     srand((unsigned)seed);
-    Rotors* rotors = malloc(sizeof(Rotors));
+    Enigma* e = malloc(sizeof(Enigma));
 	Rotor** rotorArr = malloc(sizeof(Rotor*) * numberOfRotors - 1);
 	for (int i = 0; i < numberOfRotors - 1; i++){
 		rotorArr[i] = buildRandomRotor();
 	}
-	rotors->rotorArr = rotorArr;
-	rotors->reflector = buildReflector();
-	rotors->len = numberOfRotors - 1; //1 rotor is reflector
-    return rotors;
+	e->rotorArr = rotorArr;
+	e->reflector = buildReflector();
+	e->len = numberOfRotors - 1; //1 rotor is reflector
+    return e;
 }
 
 Rotor* buildRandomRotor(){
@@ -32,7 +32,7 @@ Rotor* buildRandomRotor(){
 	rotor->turnCounter = 0;
 	
 	//generate turn threshold for a rotor
-	rotor->turnThreshold = -1;
+	rotor->turnThreshold = rand() % 26;
 
 	//allocate character map arrays
 	int* input = malloc(sizeof(int) * 26);
@@ -46,9 +46,9 @@ Rotor* buildRandomRotor(){
 	//shuffle the arrays
 	shuffle(input, output, 26);
 	
-//	printf("INPUT      OUTPUT\n");
+//	printf("INPUT     OUTPUT\n");
 //	for (int i = 0; i < 26; i++){
-//	printf("%c -> %c, %c -> %c\n", mapIntToChar(i), mapIntToChar(input[i]), mapIntToChar(input[i]),mapIntToChar(output[input[i]]));
+//		printf("%c -> %c, %c -> %c\n", mapIntToChar(i), mapIntToChar(input[i]), mapIntToChar(i),mapIntToChar(output[i]));
 //	}
 	
 	rotor->input = input;
@@ -60,26 +60,48 @@ Rotor* buildReflector() {
 	Rotor* rotor = malloc(sizeof(Rotor));
 	rotor->offset = 0;
 	rotor->turnCounter = 0;
-	rotor->turnThreshold = rand() % 26;
+	rotor->turnThreshold = -1;
 	
 	//allocate character map arrays
 	int* input = malloc(sizeof(int) * 26);
 	int* output = malloc(sizeof(int) * 26);
 	
-	//populate character maps with 0-25
-	for (int i = 0; i < 14; i++){
-		int opposite = 25-i;
-		input[i] = opposite;
-		input[opposite] = i;
+	for (int i = 0; i < 26; i++){
+		input[i] = i;
+		output[i] = i;
 	}
-//	printf("Reflector...\n");
-//	printf("INPUT      OUTPUT\n");
-//	for (int i = 0; i < 26; i++){
-//		printf("%c -> %c, %c -> %c\n", mapIntToChar(i), mapIntToChar(input[i]), mapIntToChar(input[i]),mapIntToChar(output[input[i]]));
-//	}
+	
+	//populate character maps with 0-25
+	bool flipped[26];
+	for (int i = 0; i < 26; i++){
+		flipped[i] = false;
+	}
+	for (int i = 0; i < 26; i++){
+		int ndxA = i;
+		if (flipped[i]){
+			continue;
+		}
+		int ndxB = rand() % 26;
+		if (flipped[ndxB]) { //if random index is already flipped...
+			ndxB = 25;
+			while (flipped[ndxB] && ndxB > i){ //iterate backwards over array to find non-flipped ndx
+				ndxB--;
+			}
+		}
+		flipped[ndxA] = true;
+		flipped[ndxB] = true;
+		int s = input[ndxA];
+		input[ndxA] = input[ndxB];
+		input[ndxB] = s;
+	}
 	
 	rotor->input = input;
 	rotor->output = output;
+//	printRotor(rotor);
+//	printf("INPUT     OUTPUT\n");
+//	for (int i = 0; i < 26; i++){
+//		printf("%c -> %c, %c -> %c\n", mapIntToChar(i), mapIntToChar(input[i]), mapIntToChar(input[i]),mapIntToChar(output[input[i]]));
+//	}
 	return rotor;
 }
 

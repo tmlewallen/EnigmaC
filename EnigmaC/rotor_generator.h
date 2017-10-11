@@ -11,11 +11,12 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "rotors.h"
+#include <stdbool.h>
+#include "enigma.h"
 
 #endif /* rotor_generator_h */
 
-Rotors* generateRotors(int numberOfRotors, int seed);
+Enigma* generateRotors(int numberOfRotors, int numOfPlugs, int seed);
 Rotor* buildRandomRotor();
 Rotor* buildReflector();
 void shuffle(int* array, int* recipricol, size_t n);

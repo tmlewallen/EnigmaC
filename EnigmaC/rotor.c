@@ -11,11 +11,16 @@
 
 
 void advanceRotor(Rotor* r, int i){
+	if (r->turnThreshold < 0){
+		return;
+	}
     r->turnCounter++;
-    if (r->turnThreshold > -1 && r->turnCounter >= r->turnThreshold){
+    if (r->turnCounter >= r->turnThreshold){
         r->turnCounter = 0;
         r->offset++;
-        if (r->offset >= 26){
+//		printf(" Advancing Rotor... ");
+//		printRotor(r);
+        if (r->offset > 25){
             r->offset = 0;
         }
     }
@@ -31,22 +36,32 @@ int input(Rotor* r, int a){
 }
 
 int output(Rotor* r, int a){
-    advanceRotor(r, 1);
-    int actualNdx = (a + r->offset) % 26;
-    return r->output[actualNdx];
+	int val = r->output[a];
+	val = val - r->offset;
+	if (val < 0){
+		val = 26 + val;
+	}
+    return val;
 }
 
 void printRotor(Rotor* rotor){
-	
-	printf("Input: [");
+	int* input = rotor->input;
+	int* output = rotor->output;
+	int offset = rotor->offset;
+//	printf("Input: [");
+//	for (int i = 0; i < 26; i++){
+//		printf("%d, ", rotor->input[i]);
+//	}
+//	printf("]\n");
+//	printf("Output: [");
+//	for (int i = 0; i < 26; i++){
+//		printf("%d, ", rotor->output[i]);
+//	}
+//	printf("]\n");
+	printf("INPUT     OUTPUT\n");
 	for (int i = 0; i < 26; i++){
-		printf("%d, ", rotor->input[i]);
+		int k = (i + offset) % 26;
+		printf("%d -> %d, %d -> %d\n", i, input[k], output[i], output[input[i]] + k);
 	}
-	printf("]\n");
-	printf("Output: [");
-	for (int i = 0; i < 26; i++){
-		printf("%d, ", rotor->output[i]);
-	}
-	printf("]\n");
 	
 }

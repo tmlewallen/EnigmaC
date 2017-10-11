@@ -18,20 +18,21 @@
 //args: random seed --seed
 //message (file)
 int main(int argc, const char * argv[]) {
-    // insert code here...
     int seed = DEFAULT_SEED;
     char* filename = "";
     char* message = "";
 	unsigned long msgLen = 0;
 	int numOfRotors = 3;
+	int numOfPlugs = 2;
 	
     bool seedInput = false;
     bool fileInput = false;
     bool messageInput = false;
 	bool numOfRotorsInput = false;
+	bool plugsInput = false;
 	
     if (argc == 1){
-        printf("Usage: enigma {text} [--file] [--seed] [--rotors]\n");
+        printf("Usage: enigma {text} [--file] [--seed] [--rotors] [--plugs]\n");
         return 1;
     }
     int i = 1;
@@ -52,6 +53,11 @@ int main(int argc, const char * argv[]) {
 			numOfRotorsInput = true;
 			i++;
 		}
+		else if (strcmp(argv[i], "--plugs") == 0 && i+1 < argc){
+			numOfPlugs = atoi(argv[i+1]);
+			plugsInput = true;
+			i++;
+		}
         else{
 			msgLen = strlen(argv[i]);
 			message = malloc(msgLen);
@@ -66,6 +72,9 @@ int main(int argc, const char * argv[]) {
 	if (!numOfRotorsInput){
 		printf("No rotor count provided. Defaulting to 3...\n");
 	}
+	if (!plugsInput){
+		printf("No plug count provided. Defaulting to 2...\n");
+	}
 	if (fileInput){
 		FILE* fp = fopen(filename, "r");
 		if (fp == NULL){
@@ -74,11 +83,11 @@ int main(int argc, const char * argv[]) {
 		message = readMessage(fp);
 		msgLen = strlen(message);
 	}
-    Rotors* rotors = generateRotors(numOfRotors, seed);
+    Enigma* e = generateRotors(numOfRotors, numOfPlugs, seed);
 	char* encryptedMsg = malloc(msgLen);
 	for (unsigned long i = 0; i < msgLen; i++){
 //		printf("%c (%d) -> %d\n", message[i], (int)message[i], mapCharToInt(message[i]));
-		encryptedMsg[i] = translate(rotors, message[i]);
+		encryptedMsg[i] = translate(e, message[i]);
 	}
 	printf("%s\n", encryptedMsg);
     return 0;

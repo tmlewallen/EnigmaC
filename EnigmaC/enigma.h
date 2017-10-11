@@ -6,8 +6,8 @@
 //  Copyright © 2017 Thomas. All rights reserved.
 //
 
-#ifndef rotors_h
-#define rotors_h
+#ifndef engima_h
+#define enigma_h
 
 #include <stdio.h>
 #include "rotor.h"
@@ -15,14 +15,15 @@
 #endif /* rotors_h */
 
 
-typedef struct rotors {
+typedef struct enigma {
     Rotor** rotorArr;
     Rotor* reflector;
+	Rotor* plugBoard;
     int len;
-} Rotors;
+} Enigma;
 
 int mapCharToInt(char c);
 
 char mapIntToChar(int i);
 
-char translate(Rotors* rs, char c);
+char translate(Enigma* rs, char c);

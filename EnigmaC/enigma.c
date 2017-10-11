@@ -6,7 +6,7 @@
 //  Copyright © 2017 Thomas. All rights reserved.
 //
 
-#include "rotors.h"
+#include "enigma.h"
 
 int mapCharToInt(char c){
     int intVal = (int)c;
@@ -20,7 +20,7 @@ char mapIntToChar(int i){
     return (char) i + 65;
 }
 
-char translate(Rotors* rs, char c){
+char translate(Enigma* rs, char c){
 //	printf("\n\nTranslating input %c\n", c);
 	int asciiChar = (int) c;
 	if (asciiChar == 32 || asciiChar == 10 || asciiChar == 13){
