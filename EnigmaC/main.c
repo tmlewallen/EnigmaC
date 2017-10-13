@@ -18,6 +18,7 @@
 //args: random seed --seed
 //message (file)
 int main(int argc, const char * argv[]) {
+	
     int seed = DEFAULT_SEED;
     char* filename = "";
     char* message = "";
@@ -91,9 +92,11 @@ int main(int argc, const char * argv[]) {
 		FILE* fp = fopen(filename, "r");
 		if (fp == NULL){
 			fprintf(stderr, "Error opening file %s", filename);
+			return 1;
 		}
 		message = readMessage(fp);
 		msgLen = strlen(message);
+		fclose(fp);
 	}
     Enigma* e = generateEnigma(numOfRotors, numOfPlugs, seed);
 	char* encryptedMsg = malloc(msgLen);

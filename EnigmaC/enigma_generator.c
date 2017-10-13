@@ -29,7 +29,7 @@ Enigma* generateEnigma(int numberOfRotors, int numOfPlugs, int seed){
 Rotor* buildRandomRotor(){
 	Rotor* rotor = malloc(sizeof(Rotor));
 	//Initialize positions
-	rotor->offset = 0;
+	rotor->offset = rand() % 26;
 	rotor->turnCounter = 0;
 	
 	//generate turn threshold for a rotor
@@ -125,20 +125,19 @@ Rotor* buildPlugboard(int numOfPlugs) {
 			while(flipped[ndxA]){
 				ndxA = (ndxA + 1) % 26;
 			}
-			flipped[ndxA] = true;
 		}
 		int ndxB = rand() % 26;
 		if (flipped[ndxB]) { //if random index is already flipped...
 			while(flipped[ndxB]){
 				ndxB = (ndxB + 1) % 26;
 			}
-			flipped[ndxB] = true;
 		}
+		flipped[ndxA] = true;
+		flipped[ndxB] = true;
 		int s = input[ndxA];
 		input[ndxA] = input[ndxB];
 		input[ndxB] = s;
 	}
-	
 	rotor->input = input;
 	return rotor;
 }
