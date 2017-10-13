@@ -99,6 +99,9 @@ int main(int argc, const char * argv[]) {
 		fclose(fp);
 	}
     Enigma* e = generateEnigma(numOfRotors, numOfPlugs, seed);
+	if (!quiet){
+		printEnigma(e, numOfRotors);
+	}
 	char* encryptedMsg = malloc(msgLen);
 	for (unsigned long i = 0; i < msgLen; i++){
 //		printf("%c (%d) -> %d\n", message[i], (int)message[i], mapCharToInt(message[i]));

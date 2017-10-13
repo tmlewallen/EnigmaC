@@ -5,9 +5,7 @@
 //  Created by Thomas on 10/10/17.
 //  Copyright © 2017 Thomas. All rights reserved.
 //
-#ifndef BUFFER_SIZE
-#define BUFFER_SIZE 512
-#endif
+
 #include <stdbool.h>
 #include <stdlib.h>
 #include "scanner.h"
