@@ -143,7 +143,7 @@ Rotor* buildPlugboard(int numOfPlugs) {
 }
 
 
-void shuffle(int *array, int* recipricol, size_t n)
+void shuffle(int *array, int* reciprocal, size_t n)
 {
 	if (n > 1) {
 		int i;
@@ -152,8 +152,8 @@ void shuffle(int *array, int* recipricol, size_t n)
 			int t = array[j];
 			array[j] = array[i];
 			array[i] = t;
-			recipricol[array[i]] = i;
-			recipricol[array[j]] = j;
+			reciprocal[array[i]] = i;
+			reciprocal[array[j]] = j;
 		}
 	}
 }
